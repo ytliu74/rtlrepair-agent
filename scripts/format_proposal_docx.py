@@ -36,6 +36,15 @@ with ZipFile(path, "w") as archive:
             data = xml.toxml(encoding="UTF-8")
         elif entry.filename == "word/document.xml":
             xml = minidom.parseString(data)
+            # Keep the setup instructions together on page two, matching the PDF.
+            for paragraph in xml.getElementsByTagName("w:p"):
+                text = "".join(
+                    node.firstChild.data
+                    for node in paragraph.getElementsByTagName("w:t")
+                    if node.firstChild is not None
+                )
+                if text == "Section 5. Reproducibility and Run Instructions":
+                    child(child(paragraph, "w:pPr"), "w:pageBreakBefore")
             for margin in xml.getElementsByTagName("w:pgMar"):
                 for side in ("top", "bottom", "left", "right"):
                     margin.setAttribute("w:" + side, "1152")  # 0.8 inches, matching PDF.
