@@ -13,6 +13,16 @@ def child(parent, name):
     return node
 
 
+def set_body_font(runs):
+    fonts = child(runs, "w:rFonts")
+    # Explicit font names must not be overridden by theme font references.
+    for attribute in ("asciiTheme", "hAnsiTheme", "eastAsiaTheme", "cstheme", "csTheme"):
+        if fonts.hasAttribute("w:" + attribute):
+            fonts.removeAttribute("w:" + attribute)
+    for attribute in ("ascii", "hAnsi", "eastAsia", "cs"):
+        fonts.setAttribute("w:" + attribute, "Arial")
+
+
 path = Path("proposal/capstone_proposal.docx")
 with ZipFile(path) as archive:
     entries = [(entry, archive.read(entry.filename)) for entry in archive.infolist()]
@@ -21,8 +31,12 @@ with ZipFile(path, "w") as archive:
     for entry, data in entries:
         if entry.filename == "word/styles.xml":
             xml = minidom.parseString(data)
+            defaults = child(xml.documentElement, "w:docDefaults")
+            set_body_font(child(child(defaults, "w:rPrDefault"), "w:rPr"))
             for style in xml.getElementsByTagName("w:style"):
                 identifier = style.getAttribute("w:styleId")
+                if identifier in {"Normal", "BodyText", "FirstParagraph", "Compact", "Caption", "ImageCaption"}:
+                    set_body_font(child(style, "w:rPr"))
                 if identifier in {"Normal", "BodyText", "FirstParagraph", "Heading2", "Caption", "ImageCaption"}:
                     size = "24" if identifier == "Heading2" else "22"
                     runs = child(style, "w:rPr")
@@ -51,4 +65,4 @@ with ZipFile(path, "w") as archive:
             data = xml.toxml(encoding="UTF-8")
         archive.writestr(entry, data)
 
-print("Word export formatted: 11-point body, 12-point headings, 0.8-inch margins.")
+print("Word export formatted: 11-point Arial body, 12-point headings, 0.8-inch margins.")

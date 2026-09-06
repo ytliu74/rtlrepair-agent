@@ -10,7 +10,7 @@ python3 scripts/format_proposal_docx.py
 pandoc proposal/capstone_proposal.md \
     --resource-path=proposal \
     --pdf-engine=xelatex \
-    -V documentclass=article -V fontsize=11pt \
+    -V documentclass=article -V fontsize=11pt -V mainfont=Arial \
     -V geometry:margin=0.8in -V colorlinks=true \
     --output=proposal/capstone_proposal.pdf
 echo 'Exported proposal/capstone_proposal.docx and proposal/capstone_proposal.pdf'
