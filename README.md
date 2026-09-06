@@ -10,7 +10,8 @@ Each design receives one API call. There are no repair iterations.
 Repository: https://github.com/ytliu74/rtlrepair-agent
 
 The selected baseline model is **GPT-4.1**, pinned to
-`gpt-4.1-2025-04-14`. Its first live counter and FIFO runs both passed.
+`gpt-4.1-2025-04-14`. Both designs passed in the initial live suite and again
+in a fresh public clone following the README setup (four calls total).
 The earlier GPT-5.6 Sol counter results are preserved under the
 `artifacts/archive/`, `results/archive/`, and `generated/archive/` directories.
 
@@ -185,6 +186,13 @@ All testbench tops are named `tb`.
 `artifacts/baseline_screenshot.png` is a genuine Terminal capture showing the
 FIFO command, model, generation, compilation, simulation, and the suite summary.
 
+Fresh-clone results are preserved as `results/reproduction_results.json`
+(counter), `results/fifo_reproduction_results.json`,
+`generated/{counter,fifo}_reproduction.sv`, and
+`artifacts/{reproduction,fifo_reproduction,suite_reproduction}_output.txt`.
+JSON paths retain their original names relative to that clone; the archived
+modules match the recorded SHA-256 hashes.
+
 Each JSON records model IDs, stage statuses/latencies, return codes, timeouts,
 compiler/simulator stdout/stderr, prompt, timestamps, token usage, and SHA-256
 hashes of the specification, testbench, and generated RTL.
@@ -209,6 +217,11 @@ FIFO: PASS
 | --- | --- | --- | --- | --- | --- |
 | Counter | 1.984719 s | PASS | PASS | TEST_PASS; 853 checks | 329 |
 | FIFO | 3.477588 s | PASS | PASS | TEST_PASS; 2,233 checks / 744 cycles | 1,099 |
+
+The fresh public clone of commit `a3c7b1c9d4f069c34c599528c28aff03304e25ed`
+also passed all 20 tests and both live examples. Counter generation took
+1.274676 s (322 tokens); FIFO generation took 3.712335 s (1,234 tokens).
+No failed model calls were discarded or repaired in these four trials.
 
 The FIFO compiler reported that `unique/unique0` case qualities are ignored.
 Compilation still exited zero; the independent scoreboard passed. The warning

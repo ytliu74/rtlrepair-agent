@@ -41,14 +41,13 @@ ordering, and pointer wrap. At full, simultaneous read/write accepts both; at
 empty it accepts only the write, with no bypass. An independent shift-queue
 scoreboard checks directed boundaries and 512 deterministic stimulus cycles.
 
-Actual first GPT-4.1 results on September 6, 2026: both designs compiled, simulated,
-and emitted **TEST_PASS**. Counter: 853 checks, 1.985 s generation, 329 tokens.
-FIFO: 744 cycles, 2,233 state checks, 3.478 s generation, 1,099 tokens.
-Icarus warned that FIFO `unique case` qualities are ignored; compilation exited
-zero and evaluation passed. Generated RTL was not hand-edited.
+Both designs compiled, simulated, and emitted **TEST_PASS** on September 6, 2026,
+including fresh-clone reruns. First counter: 853 checks, 1.985 s generation,
+329 tokens. First FIFO: 744 cycles, 2,233 checks, 3.478 s, 1,099 tokens.
+FIFO compilation emitted a nonfatal ignored-`unique case` warning.
 `generated/{counter,fifo}.sv`, `results/{baseline,fifo}_results.json`, and
 `artifacts/{baseline,fifo}_output.txt` preserve the actual outputs.
-Earlier GPT-5.6 counter evidence is archived separately.
+Earlier GPT-5.6 evidence is archived.
 
 ![Genuine Terminal capture: GPT-4.1 FIFO command, verification output, and both task results.](../artifacts/baseline_screenshot.png){width=6.2in}
 
@@ -60,8 +59,7 @@ and Icarus Verilog (`brew install icarus-verilog` on macOS). Run
 `python -m pip install -r requirements.txt` (standard library only).
 Copy `.env.example` to `.env`; fill `OPENAI_API_KEY` and retain
 `OPENAI_MODEL=gpt-4.1-2025-04-14`. Optional `OPENAI_BASE_URL` defaults to
-`https://api.openai.com/v1`. Run `./scripts/run_examples.sh`, or
-`./scripts/run_baseline.sh fifo` for FIFO alone. Each `examples/<task>/`
+`https://api.openai.com/v1`. Run `./scripts/run_examples.sh`. Each `examples/<task>/`
 contains `spec.txt` and `tb.sv`; outputs are listed above. API model access is
 required. README supplies Linux setup and offline verification; 20 tests pass.
 

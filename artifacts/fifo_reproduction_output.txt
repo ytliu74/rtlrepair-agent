@@ -1,4 +1,4 @@
-$ ./scripts/run_baseline.sh counter
+$ ./scripts/run_baseline.sh fifo
 [PASS] Python 3.13.1 (requires 3.10+)
 [PASS] iverilog found
 [PASS] vvp found
@@ -8,12 +8,13 @@ $ ./scripts/run_baseline.sh counter
 [PASS] API URL configuration
 Model: gpt-4.1-2025-04-14
 Generating RTL (one LLM call; testbench withheld)...
-Generation: PASS -> generated/counter.sv
+Generation: PASS -> generated/fifo.sv
 Compilation: PASS
 Simulation: PASS
 --- simulation_stdout ---
-Checks: 853
+Cycles: 744; checks: 2233
+Coverage: full_both=4 empty_both=5 both=129 overflow=1 underflow=25 resets=8
 TEST_PASS
-/private/tmp/rtlrepair-gpt41.e9PStk/rtlrepair-agent/examples/counter/tb.sv:60: $finish called at 2846000 (1ps)
+/private/tmp/rtlrepair-gpt41.e9PStk/rtlrepair-agent/examples/fifo/tb.sv:116: $finish called at 7446000 (1ps)
 Functional verification: TEST_PASS
-Results: results/baseline_results.json
+Results: results/fifo_results.json

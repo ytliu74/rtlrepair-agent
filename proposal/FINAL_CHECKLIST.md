@@ -4,14 +4,14 @@ Deadline: **September 6, 2026, 11:59 PM Phoenix Time (UTC−07:00)**
 
 Repository: https://github.com/ytliu74/rtlrepair-agent
 
-**Current revision:** GPT-4.1 counter + FIFO, one call per design, no repair.
-Both first live runs passed. Public-clone reproduction and final document checks
-are being refreshed for this expanded baseline.
+**Status: submission-ready.** GPT-4.1 counter + FIFO, one call per design, no
+repair. Both designs passed in the initial suite and the fresh public clone.
+Only the student's Canvas upload remains.
 
 ## Submission checklist
 
-- [ ] Proposal completed using instructor template's structure and Word reference styles
-- [ ] Proposal is approximately 1–2 pages (recheck updated PDF and Word)
+- [x] Proposal completed using instructor template's structure and Word reference styles
+- [x] Proposal is approximately 1–2 pages (PDF and Word: 2 pages each)
 - [x] Public repository URL inserted
 - [x] Repository accessible to everyone
 - [x] README.md complete
@@ -27,14 +27,14 @@ are being refreshed for this expanded baseline.
 - [x] Actual successful baseline output saved
 - [x] Successful screenshot captured
 - [x] Screenshot clearly shows FIFO command, model, execution, and both outcomes
-- [ ] No API keys committed (repeat scan for new artifacts)
-- [ ] Final repository changes pushed
+- [x] No API keys committed (actual-key and pattern scans; `.env` excluded)
+- [x] Final repository changes pushed
 - [x] Repository link tested
 - [ ] Canvas submission completed before 11:59 PM Phoenix Time
 
 ## Manual action remaining: Canvas submission
 
-After final checks, upload `proposal/capstone_proposal.pdf` (or Word if Canvas
+Upload `proposal/capstone_proposal.pdf` (or Word if Canvas
 requires it) and `artifacts/baseline_screenshot.png`, with the public repository
 link. Confirm the files and submission timestamp before the deadline.
 The screenshot is also embedded in both proposal exports.
@@ -52,6 +52,13 @@ Neither testbench nor reference fixture is included in generation.
 | Counter | 22:37:29 | 1.984719 s | TEST_PASS; 853 checks | 329 |
 | FIFO | 22:37:32 | 3.477588 s | TEST_PASS; 744 cycles / 2,233 checks | 1,099 |
 
+Fresh-public-clone repetitions (same model and testbench hashes):
+
+| Task | Start (UTC, September 6) | Generation | Compile / simulation / functional result | Tokens |
+| --- | --- | --- | --- | --- |
+| Counter | 22:42:47 | 1.274676 s | PASS / PASS / TEST_PASS | 322 |
+| FIFO | 22:42:49 | 3.712335 s | PASS / PASS / TEST_PASS | 1,234 |
+
 Both compiler and simulator exit codes were zero for both tasks.
 The FIFO compile warning about ignored `unique/unique0` qualities is preserved,
 not suppressed. Generated code was not manually corrected.
@@ -60,6 +67,14 @@ Primary files: `generated/counter.sv`, `generated/fifo.sv`,
 `results/baseline_results.json`, `results/fifo_results.json`,
 `artifacts/baseline_output.txt`, `artifacts/fifo_output.txt`, and
 `artifacts/suite_output.txt`.
+
+Reproduction files: `results/reproduction_results.json` (counter),
+`results/fifo_reproduction_results.json`, `generated/counter_reproduction.sv`,
+`generated/fifo_reproduction.sv`, and the `reproduction_output.txt`,
+`fifo_reproduction_output.txt`, and `suite_reproduction_output.txt` logs in
+`artifacts/`. JSON retains original paths from the fresh clone; the saved modules
+match its generated-RTL hashes. All four actual model calls passed; none were
+discarded or repaired. The screenshot records the first suite.
 
 `artifacts/baseline_screenshot.png` is a real macOS capture of the Terminal
 window where `./scripts/run_examples.sh` executed. Its visible portion includes
@@ -84,7 +99,14 @@ Those are historical results and are not evidence for the current model.
   underflow, data-out hold, reset priority, and pointer wrap.
 - `./scripts/check_environment.sh` passes with the configured GPT-4.1 snapshot.
 - `./scripts/run_examples.sh` passed in the actual Terminal.
-- Fresh public-clone reproduction for this revision remains to be recorded.
+- Fresh unauthenticated HTTPS clone of `a3c7b1c9d4f069c34c599528c28aff03304e25ed`:
+  created a virtual environment, installed requirements, configured a protected
+  local `.env`, passed environment checks and all 20 tests, then ran
+  `./scripts/run_examples.sh`. Both live tasks passed. Temporary credential copy
+  removed afterward; original local `.env` retained and untracked.
+- Input and generated-source SHA-256 hashes checked against all four live results.
+- PDF pages visually checked; Microsoft Word's actual page-count query reports 2.
+- Public repository, README, screenshot, and proposal links checked without authentication.
 
 ## Proposal exports
 
