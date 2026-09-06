@@ -4,14 +4,16 @@ Deadline: **September 6, 2026, 11:59 PM Phoenix Time (UTC−07:00)**
 
 Repository: https://github.com/ytliu74/rtlrepair-agent
 
-**Status: NOT submission-ready.** Live LLM generation is blocked by missing
-`OPENAI_API_KEY` and `OPENAI_MODEL`. The actual fixture passed 853 checks; it is
-not evidence of LLM generation. The proposal explicitly reflects this distinction.
+**Status: submission-ready. Canvas upload remains the student's final action.**
+Two real one-shot runs with `gpt-5.6-sol` each passed 853 checks. The second used
+a fresh unauthenticated public clone and the README setup. A genuine Terminal
+screenshot shows the command, model, generation, compilation, simulation, and
+`TEST_PASS`. No iterative repair is claimed.
 
 ## Submission checklist
 
-- [ ] Proposal completed using instructor template
-- [x] Proposal is approximately 1–2 pages (PDF verified: 2 pages; check Word after final edits)
+- [x] Proposal completed using instructor template's structure and Word reference styles
+- [x] Proposal is approximately 1–2 pages (PDF: 2 pages, including screenshot)
 - [x] Public repository URL inserted
 - [x] Repository accessible to everyone
 - [x] README.md complete
@@ -22,85 +24,81 @@ not evidence of LLM generation. The proposal explicitly reflects this distinctio
 - [x] Input location documented
 - [x] Output location documented
 - [x] Concrete test case included
-- [ ] Baseline actually executed through a real LLM call
-- [ ] Generated RTL saved
-- [x] Actual baseline attempt output saved (configuration failure, not success)
-- [ ] Successful screenshot captured
-- [ ] Screenshot clearly shows execution and output
-- [x] No API keys committed (staged secret-pattern scan clear; `.env` excluded)
-- [x] Current implementation and proposal draft changes pushed (live evidence still pending)
+- [x] Baseline actually executed through a real LLM call
+- [x] Generated RTL saved
+- [x] Actual successful baseline output saved
+- [x] Successful screenshot captured
+- [x] Screenshot clearly shows execution and output
+- [x] No API keys committed (actual-key/pattern scan passed; `.env` excluded)
+- [x] Final repository changes pushed
 - [x] Repository link tested
 - [ ] Canvas submission completed before 11:59 PM Phoenix Time
 
-## Required actions to finish
+## Manual action remaining: Canvas submission
 
-1. Fill the existing local `.env` with your API key and model ID. Do not paste the
-   key into chat or commit it. Run `./scripts/check_environment.sh`, then
-   `./scripts/run_baseline.sh`. The latter must show generation, compilation,
-   simulation, and functional success. A failed live generation must be reported
-   honestly; never substitute `tests/fixtures/counter_good.sv` as a generated result.
-2. Reproduce the live baseline a second time using the README workflow. Preserve
-   the actual generated RTL, JSON, and transcript. Update README's evidence status
-   and proposal Sections 3–5 and 7 with the actual model and observed result.
-3. Capture the screenshot as below, then update the screenshot checklist items.
-4. Regenerate the proposal exports after updating the Markdown, verify the 1–2 page
-   limit in Word/PDF, and ensure Section 4 includes/references the real screenshot.
-5. Commit and push updated result, screenshot, and proposal files (never `.env`).
-6. Upload the completed proposal and screenshot to Canvas with the public
-   repository link before the deadline. Confirm Canvas shows the submitted files.
+Upload `proposal/capstone_proposal.pdf` (or the Word version if required by Canvas)
+and `artifacts/baseline_screenshot.png`. Include the public repository URL above.
+Confirm that Canvas shows the intended files and a submission timestamp before
+the deadline. The screenshot is also embedded in the proposal; the separate PNG
+provides the full-resolution original. Canvas submission has not been performed.
 
-## MANDATORY MANUAL ACTION: screenshot
+## Actual live evidence
 
-After configuring the API, run in a visible terminal:
+Both runs used OpenAI's `https://api.openai.com/v1` endpoint with requested and
+returned model ID `gpt-5.6-sol`, one call per run, no retries or repair, and a
+4,096-completion-token limit. Each reported 242 prompt tokens plus 80 completion
+tokens. The model received no testbench source.
 
-```bash
-./scripts/run_baseline.sh
-```
+| Run | Start (UTC, September 6) | Generation | Compile | Simulation | Result |
+| --- | --- | --- | --- | --- | --- |
+| Primary | 21:58:25 | 2.644741 s | 0.057887 s | 0.013298 s | TEST_PASS, 853 checks |
+| Fresh public clone | 22:00:54 | 1.941901 s | 0.037862 s | 0.013409 s | TEST_PASS, 853 checks |
 
-Then take a screenshot of the terminal showing:
+Primary files: `generated/counter.sv`, `results/baseline_results.json`, and
+`artifacts/baseline_output.txt`. Reproduction files:
+`generated/counter_reproduction.sv`, `results/reproduction_results.json`, and
+`artifacts/reproduction_output.txt`. Reproduction JSON preserves the paths from
+the original clone; the archived RTL's SHA-256 matches its recorded hash.
 
-1. The command.
-2. Successful generation.
-3. Compilation success.
-4. Simulation success.
-5. `TEST_PASS`.
-
-Save as `artifacts/baseline_screenshot.png` and save/upload this screenshot with
-the Canvas submission. On macOS use Shift–Command–4 and capture the terminal
-window/region containing the command and final output. Do not capture API keys.
-A fixture screenshot does not satisfy evidence of the complete live baseline.
-No screenshot has been fabricated or generated from text.
+`artifacts/baseline_screenshot.png` is an actual macOS capture of the Terminal
+window in which the second run executed. The window was resized to show both
+the command and the result; no terminal image was generated from text.
 
 ## Validation evidence
 
-- Python 3.13.1 and Icarus Verilog 12.0 installed.
+- Python 3.13.1 and Icarus Verilog 12.0.
 - `python -m unittest discover -s tests -v`: 17 tests passed, including seven
-  counter mutation cases, real compilation failure, and real simulation timeout.
-- `python -m scripts.run_fixture`: PASS, 853 comparisons; evidence in
-  `results/fixture_results.json` and `artifacts/fixture_output.txt`.
-- `./scripts/check_environment.sh`: failed only for absent key/model configuration.
-- `./scripts/run_baseline.sh`: exits 1; actual blocked-at-generation result saved
-  in `results/baseline_results.json` and `artifacts/baseline_output.txt`.
-- Repository created public; unauthenticated GitHub page and raw README returned
-  HTTP 200 on September 6, 2026. An unauthenticated HTTPS clone succeeded.
-- Fresh public clone: README virtual-environment/dependency setup succeeded;
-  all 16 tests present at the initial published revision and the fixture passed.
-  The canonical command correctly recorded missing API configuration. A later
-  17th local test also exercises the CLI with an explicitly mocked completion and
-  real EDA tools; that test is not live-model evidence.
+  counter mutation cases, real compilation failure, real simulation timeout,
+  and CLI execution using a clearly marked mocked completion with real EDA tools.
+- `python -m scripts.run_fixture`: PASS, 853 comparisons; separate hand-written
+  fixture evidence in `results/fixture_results.json` and `artifacts/fixture_output.txt`.
+- `./scripts/check_environment.sh`: all checks passed after local API setup.
+- `./scripts/run_baseline.sh`: live generation, compilation, simulation, and
+  functional verification all passed, twice. Generated modules and raw logs saved.
+- Fresh public clone of commit `8603331e3f00befdbee9dc1fed60b843b1167e60`:
+  virtual environment created, `pip install -r requirements.txt` succeeded,
+  local `.env` configured, environment checks passed, and live baseline passed.
+- Unauthenticated GitHub page, raw README, and public HTTPS clone succeeded.
+- Final staged credential scan covered 34 files and decompressed Word contents;
+  no key or credential pattern was found. The temporary reproduction credential
+  copy was removed; the original project `.env` remains local and untracked.
+- Both live results' specification, testbench, and generated-RTL SHA-256 hashes
+  match their saved source files. The unchanged baseline code passed 17 tests.
+- `./scripts/build_proposal.sh` exported Word/PDF; `pdfinfo` confirms 2 PDF pages.
+  Both PDF pages were visually checked for complete text and the genuine screenshot.
 
-The provided instructor template is preserved at
-`CSE598-capstone-proposal-template.docx`. The proposal uses its Basic Information
-and seven section headings. Substantive work is recorded in
-`proposal/capstone_proposal.md`; blocked requirements remain explicit.
+## Proposal files
 
-Word and PDF drafts are available at `proposal/capstone_proposal.docx` and
-`proposal/capstone_proposal.pdf`. The Word export uses the instructor document as
-its Pandoc reference template. The PDF is 2 pages, visually checked for clipping
-and complete content. Neither export is submission-ready until the live evidence
-is filled in. Rebuild with `./scripts/build_proposal.sh` if Pandoc and XeLaTeX are
-installed; these are document-authoring tools, not baseline dependencies.
+`proposal/capstone_proposal.md` contains the instructor's Basic Information and
+seven required sections, with actual observed model/results and the screenshot.
+The original `CSE598-capstone-proposal-template.docx` is preserved and used as the
+Word export's reference template. Exports are `proposal/capstone_proposal.docx`
+and `proposal/capstone_proposal.pdf`.
 
-Automatic desktop inspection failed with an Apple Events timeout, and no live
-generation success exists to capture. The screenshot therefore remains a
-mandatory manual action.
+Use the verified two-page PDF for submission when PDF is accepted. The Word
+export contains all required sections and the embedded screenshot, but its
+pagination in Microsoft Word could not be checked because Word's Apple Events
+interface timed out. The original instructor document is unchanged.
+
+To rebuild exports, run `./scripts/build_proposal.sh` with Pandoc and XeLaTeX
+installed. These are document-authoring tools, not baseline runtime dependencies.

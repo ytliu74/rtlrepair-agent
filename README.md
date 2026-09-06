@@ -10,9 +10,9 @@ is proposed semester work and is not implemented.
 
 Repository: https://github.com/ytliu74/rtlrepair-agent
 
-**Current evidence:** the hand-written fixture passes the real counter testbench
-(853 checks). The live baseline attempt is blocked by missing API configuration;
-there is no claimed LLM-generated success yet. See
+**Current evidence:** two live one-shot runs with `gpt-5.6-sol` each compiled,
+simulated, and passed all 853 counter checks. The second run reproduced the
+baseline from a fresh public clone. A genuine Terminal screenshot is saved. See
 [the submission checklist](proposal/FINAL_CHECKLIST.md).
 
 ## Baseline Architecture
@@ -100,16 +100,16 @@ Edit `.env` locally:
 
 ```dotenv
 OPENAI_API_KEY=your-provider-api-key
-OPENAI_MODEL=gpt-4.1-mini-2025-04-14
+OPENAI_MODEL=gpt-5.6-sol
 OPENAI_BASE_URL=
 ```
 
 `OPENAI_API_KEY` contains the secret. `OPENAI_MODEL` is the exact model ID to call.
-The ID above is an example configuration using the documented
-[GPT-4.1 mini snapshot](https://developers.openai.com/api/docs/models/gpt-4.1-mini);
-it is **not an observed experiment result**. No model was configured in the saved
-live attempt. Choose a model your account can access; subsequent runs record the
-requested and returned model IDs in JSON.
+The saved experiments used `gpt-5.6-sol` through `https://api.openai.com/v1`, and
+the API returned the same model ID. `.env.example` selects that observed model.
+Your account must have access to it. You may select another compatible model,
+but that is a different experimental configuration; runs record both the requested
+and returned model IDs in JSON.
 
 Leave `OPENAI_BASE_URL` empty for `https://api.openai.com/v1`. For another compatible
 provider, set its HTTPS API root (usually ending in `/v1`), **without** appending
@@ -161,7 +161,12 @@ with case inequality and contains a simulation-time watchdog.
   status, stage latencies, return codes, timeouts, stdout/stderr, prompt, input/RTL
   SHA-256 hashes, timestamp, and usage if the provider supplies it.
 - `artifacts/baseline_output.txt`: real stdout/stderr captured by `tee`.
-- `artifacts/baseline_screenshot.png`: required submission screenshot, once captured.
+- `artifacts/baseline_screenshot.png`: genuine Terminal capture of the successful
+  fresh-clone reproduction, showing the command and all verification stages.
+- `results/reproduction_results.json`, `artifacts/reproduction_output.txt`, and
+  `generated/counter_reproduction.sv`: preserved second live run. Paths inside
+  its unmodified JSON are relative to the original fresh clone; its generated RTL
+  is archived here as `counter_reproduction.sv` and matches the recorded SHA-256.
 
 Each canonical run replaces its JSON/log and, if generation succeeds, its generated
 RTL. An old RTL file can remain after a failed generation; the **current JSON** is
@@ -171,22 +176,36 @@ Compiled binaries are temporary and are removed automatically.
 
 ## Expected Output
 
-The saved live attempt currently reports this **actual configuration failure**:
+The saved live runs produced these actual output lines (environment checks and
+the simulator's source-location message are omitted here; the saved logs are raw):
 
 ```text
-Model: (not configured)
+Model: gpt-5.6-sol
 Generating RTL (one LLM call; testbench withheld)...
-Error: Set OPENAI_API_KEY and OPENAI_MODEL in .env (see README.md).
-Compilation: NOT RUN
-Simulation: NOT RUN
-Functional verification: FAIL
+Generation: PASS -> generated/counter.sv
+Compilation: PASS
+Simulation: PASS
+--- simulation_stdout ---
+Checks: 853
+TEST_PASS
+Functional verification: TEST_PASS
 Results: results/baseline_results.json
 ```
 
-Successful generation must produce `Generation: PASS`; compilation and simulation
-must each report `PASS`, and the testbench must emit `TEST_PASS`. A live success
-has not yet been observed. Do not confuse the following offline smoke test with
-an LLM-generated result:
+| Observed run (September 6, 2026, UTC) | Generation | Compile | Simulation | Functional result |
+| --- | --- | --- | --- | --- |
+| First live run, 21:58:25 | 2.644741 s | 0.057887 s | 0.013298 s | PASS, 853 checks |
+| Fresh public clone, 22:00:54 | 1.941901 s | 0.037862 s | 0.013409 s | PASS, 853 checks |
+
+Each run made one LLM call. The API reported 242 prompt tokens and 80 completion
+tokens (322 total) for each. These are two smoke tests of one task, not a benchmark
+pass-rate estimate. The earlier missing-configuration attempt is retained in Git
+history; the current canonical artifacts contain the first successful live run.
+
+![Genuine Terminal screenshot of the fresh-clone live baseline](artifacts/baseline_screenshot.png)
+
+The following offline smoke test separately validates the hand-written fixture;
+it does not call an LLM:
 
 ```bash
 python -m scripts.run_fixture

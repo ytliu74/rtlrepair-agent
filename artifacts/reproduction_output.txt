@@ -14,6 +14,6 @@ Simulation: PASS
 --- simulation_stdout ---
 Checks: 853
 TEST_PASS
-/Users/henry/repos/CSE598-proposal-RTL/examples/counter/tb.sv:60: $finish called at 2846000 (1ps)
+/private/tmp/rtlrepair-live.QHp5zm/rtlrepair-agent/examples/counter/tb.sv:60: $finish called at 2846000 (1ps)
 Functional verification: TEST_PASS
 Results: results/baseline_results.json
