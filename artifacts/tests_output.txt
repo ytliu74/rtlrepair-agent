@@ -1,0 +1,22 @@
+test_fail_marker (test_baseline.ParsingTests.test_fail_marker) ... ok
+test_fences (test_baseline.ParsingTests.test_fences) ... ok
+test_http_error_does_not_echo_secret (test_baseline.ParsingTests.test_http_error_does_not_echo_secret) ... ok
+test_literal_env_and_shell_priority (test_baseline.ParsingTests.test_literal_env_and_shell_priority) ... ok
+test_malformed (test_baseline.ParsingTests.test_malformed) ... ok
+test_malformed_api_response (test_baseline.ParsingTests.test_malformed_api_response) ... ok
+test_pass_marker (test_baseline.ParsingTests.test_pass_marker) ... ok
+test_prompt_withholds_testbench (test_baseline.ParsingTests.test_prompt_withholds_testbench) ... ok
+test_single_request_and_payload (test_baseline.ParsingTests.test_single_request_and_payload) ... ok
+test_unfenced (test_baseline.ParsingTests.test_unfenced) ... ok
+test_cli_pipeline_with_explicit_mock_not_live_evidence (test_baseline.SimulatorTests.test_cli_pipeline_with_explicit_mock_not_live_evidence) ... ok
+test_compiler_failure (test_baseline.SimulatorTests.test_compiler_failure) ... ok
+test_counter_mutations_fail (test_baseline.SimulatorTests.test_counter_mutations_fail) ... ok
+test_good_fixture (test_baseline.SimulatorTests.test_good_fixture) ... ok
+test_pass_with_nonzero_exit_fails (test_baseline.SimulatorTests.test_pass_with_nonzero_exit_fails) ... ok
+test_timeout (test_baseline.SimulatorTests.test_timeout) ... ok
+test_zero_exit_without_pass_fails (test_baseline.SimulatorTests.test_zero_exit_without_pass_fails) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.831s
+
+OK

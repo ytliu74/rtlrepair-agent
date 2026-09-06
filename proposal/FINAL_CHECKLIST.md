@@ -28,7 +28,7 @@ not evidence of LLM generation. The proposal explicitly reflects this distinctio
 - [ ] Successful screenshot captured
 - [ ] Screenshot clearly shows execution and output
 - [x] No API keys committed (staged secret-pattern scan clear; `.env` excluded)
-- [ ] Final repository changes pushed
+- [x] Current implementation and proposal draft changes pushed (live evidence still pending)
 - [x] Repository link tested
 - [ ] Canvas submission completed before 11:59 PM Phoenix Time
 
@@ -74,15 +74,20 @@ No screenshot has been fabricated or generated from text.
 ## Validation evidence
 
 - Python 3.13.1 and Icarus Verilog 12.0 installed.
-- `python -m unittest discover -s tests -v`: 16 tests passed, including seven
+- `python -m unittest discover -s tests -v`: 17 tests passed, including seven
   counter mutation cases, real compilation failure, and real simulation timeout.
 - `python -m scripts.run_fixture`: PASS, 853 comparisons; evidence in
   `results/fixture_results.json` and `artifacts/fixture_output.txt`.
 - `./scripts/check_environment.sh`: failed only for absent key/model configuration.
 - `./scripts/run_baseline.sh`: exits 1; actual blocked-at-generation result saved
   in `results/baseline_results.json` and `artifacts/baseline_output.txt`.
-- Repository created public; unauthenticated GitHub page returned HTTP 200 on
-  September 6, 2026. Final source/README availability will be rechecked after push.
+- Repository created public; unauthenticated GitHub page and raw README returned
+  HTTP 200 on September 6, 2026. An unauthenticated HTTPS clone succeeded.
+- Fresh public clone: README virtual-environment/dependency setup succeeded;
+  all 16 tests present at the initial published revision and the fixture passed.
+  The canonical command correctly recorded missing API configuration. A later
+  17th local test also exercises the CLI with an explicitly mocked completion and
+  real EDA tools; that test is not live-model evidence.
 
 The provided instructor template is preserved at
 `CSE598-capstone-proposal-template.docx`. The proposal uses its Basic Information

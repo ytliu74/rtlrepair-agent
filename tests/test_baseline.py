@@ -2,6 +2,7 @@ import json
 import os
 from pathlib import Path
 import shutil
+import sys
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -87,6 +88,33 @@ class ParsingTests(unittest.TestCase):
 
 @unittest.skipUnless(shutil.which("iverilog") and shutil.which("vvp"), "Icarus required")
 class SimulatorTests(unittest.TestCase):
+    def test_cli_pipeline_with_explicit_mock_not_live_evidence(self):
+        import contextlib
+        import io
+        from src.baseline import main
+
+        with tempfile.TemporaryDirectory() as directory:
+            rtl = Path(directory) / "generated.sv"
+            results = Path(directory) / "results.json"
+            argv = ["baseline", "--spec", str(ROOT / "examples/counter/spec.txt"),
+                    "--testbench", str(TB), "--output", str(rtl), "--results", str(results)]
+            for content, expected_success in ((GOOD.read_text(), True), ("malformed response", False)):
+                response = {"content": content, "response_model": "mock-fixture-not-a-live-model"}
+                with self.subTest(success=expected_success), patch.object(sys, "argv", argv), patch("src.baseline.load_env"), patch.dict(os.environ, {"OPENAI_MODEL": "mock-fixture-not-a-live-model"}), patch("src.rtl_generator.complete", return_value=response) as client, contextlib.redirect_stdout(io.StringIO()):
+                    code = main()
+                    client.assert_called_once()
+                    result = json.loads(results.read_text())
+                    self.assertEqual(code, 0 if expected_success else 1)
+                    self.assertEqual(result["functional_pass"], expected_success)
+                    self.assertEqual(result["generation_success"], expected_success)
+                    if expected_success:
+                        self.assertEqual(rtl.read_text(), GOOD.read_text())
+                        self.assertIn("TEST_PASS", result["simulation_stdout"])
+                    else:
+                        # Prior RTL must not be reported as generated in this failed attempt.
+                        self.assertIsNone(result["generated_rtl_path"])
+                        self.assertIsNone(result["compile_latency_seconds"])
+
     def test_good_fixture(self):
         result = verify(GOOD, TB)
         self.assertTrue(result["compile_success"], result)

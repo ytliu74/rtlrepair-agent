@@ -1,10 +1,10 @@
 {
   "test_name": "counter",
   "mode": "one-shot",
-  "started_at_utc": "2026-09-06T20:11:11.172262+00:00",
+  "started_at_utc": "2026-09-06T20:12:26.333123+00:00",
   "model": null,
   "generation_success": false,
-  "generation_latency_seconds": 6e-06,
+  "generation_latency_seconds": 7e-06,
   "generated_rtl_path": null,
   "spec_path": "examples/counter/spec.txt",
   "testbench_path": "examples/counter/tb.sv",
@@ -24,6 +24,6 @@
   "compile_timed_out": false,
   "simulation_timed_out": false,
   "spec_sha256": "1f039602f2c16b3524989ed6b02813c847ff528de5e42b4ffbf7fa374eab2bb0",
-  "testbench_sha256": "4165203dd63643439291b2e7bef8940f48f26189d472385dc36afb062726c461",
-  "completed_at_utc": "2026-09-06T20:11:11.172938+00:00"
+  "testbench_sha256": "fc3c82507f4ee956d86b47d98a442e4eea05817e03cc13e2d67592e49c195670",
+  "completed_at_utc": "2026-09-06T20:12:26.333890+00:00"
 }
