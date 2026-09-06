@@ -1,0 +1,2 @@
+# No third-party Python packages. Runtime and tests use Python 3.10+ stdlib.
+# Install Icarus Verilog separately; see README.md.

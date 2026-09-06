@@ -1,0 +1,18 @@
+{
+  "mode": "hand-written-fixture",
+  "model": null,
+  "rtl_path": "tests/fixtures/counter_good.sv",
+  "compile_success": true,
+  "simulation_success": true,
+  "functional_pass": true,
+  "compile_latency_seconds": 0.018658,
+  "simulation_latency_seconds": 0.008571,
+  "compiler_stdout": "",
+  "compiler_stderr": "",
+  "simulation_stdout": "Checks: 853\nTEST_PASS\n/Users/henry/repos/CSE598-proposal-RTL/examples/counter/tb.sv:60: $finish called at 2846000 (1ps)\n",
+  "simulation_stderr": "",
+  "compile_returncode": 0,
+  "simulation_returncode": 0,
+  "compile_timed_out": false,
+  "simulation_timed_out": false
+}

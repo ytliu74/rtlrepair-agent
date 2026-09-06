@@ -1,0 +1,15 @@
+Design a synthesizable 8-bit unsigned synchronous up counter.
+The complete module must be named counter with exactly these ports:
+  input logic clk
+  input logic reset
+  input logic enable
+  output logic [7:0] count
+
+On each rising edge of clk:
+1. If reset is high, set count to zero, regardless of enable.
+2. Otherwise, if enable is high, increment count by one modulo 256.
+3. Otherwise, retain the previous count.
+Reset is active high and synchronous: changing reset between rising clock edges
+must not change count. Output count must not change on falling clock edges.
+Incrementing 255 must wrap to 0. No initial value is required before the first
+rising clock edge at which reset is asserted. Provide only the counter module.

@@ -1,0 +1,17 @@
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.vvp
+*.vcd
+*.tmp
+.DS_Store
+.build/
+# Local task brief; the runnable project and instructor template are published.
+instruction.md
+proposal/*.aux
+proposal/*.log
+proposal/*.out

@@ -1,0 +1,15 @@
+$ ./scripts/run_baseline.sh
+[PASS] Python 3.13.1 (requires 3.10+)
+[PASS] iverilog found
+[PASS] vvp found
+[PASS] Python dependencies: standard library only
+[FAIL] OPENAI_API_KEY configured
+[FAIL] OPENAI_MODEL configured
+Environment check failed; recording the baseline attempt below.
+Model: (not configured)
+Generating RTL (one LLM call; testbench withheld)...
+Error: Set OPENAI_API_KEY and OPENAI_MODEL in .env (see README.md).
+Compilation: NOT RUN
+Simulation: NOT RUN
+Functional verification: FAIL
+Results: results/baseline_results.json

@@ -1,0 +1,7 @@
+Offline fixture only: hand-written RTL, no LLM call.
+Compilation: PASS
+Simulation: PASS
+Checks: 853
+TEST_PASS
+/Users/henry/repos/CSE598-proposal-RTL/examples/counter/tb.sv:60: $finish called at 2846000 (1ps)
+Functional verification: TEST_PASS
