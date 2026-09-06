@@ -6,6 +6,7 @@ pandoc proposal/capstone_proposal.md \
     --resource-path=proposal \
     --reference-doc=CSE598-capstone-proposal-template.docx \
     --output=proposal/capstone_proposal.docx
+python3 scripts/format_proposal_docx.py
 pandoc proposal/capstone_proposal.md \
     --resource-path=proposal \
     --pdf-engine=xelatex \

@@ -13,7 +13,7 @@ screenshot shows the command, model, generation, compilation, simulation, and
 ## Submission checklist
 
 - [x] Proposal completed using instructor template's structure and Word reference styles
-- [x] Proposal is approximately 1–2 pages (PDF: 2 pages, including screenshot)
+- [x] Proposal is approximately 1–2 pages (PDF and Microsoft Word: 2 pages each)
 - [x] Public repository URL inserted
 - [x] Repository accessible to everyone
 - [x] README.md complete
@@ -79,13 +79,16 @@ the command and the result; no terminal image was generated from text.
   virtual environment created, `pip install -r requirements.txt` succeeded,
   local `.env` configured, environment checks passed, and live baseline passed.
 - Unauthenticated GitHub page, raw README, and public HTTPS clone succeeded.
-- Final staged credential scan covered 34 files and decompressed Word contents;
+- Final staged credential scan covered 35 files and decompressed Word contents;
   no key or credential pattern was found. The temporary reproduction credential
   copy was removed; the original project `.env` remains local and untracked.
 - Both live results' specification, testbench, and generated-RTL SHA-256 hashes
   match their saved source files. The unchanged baseline code passed 17 tests.
 - `./scripts/build_proposal.sh` exported Word/PDF; `pdfinfo` confirms 2 PDF pages.
   Both PDF pages were visually checked for complete text and the genuine screenshot.
+- Microsoft Word's `compute statistics ... statistic pages` confirms 2 pages
+  after applying the export script's 11-point body, 12-point headings, and
+  0.8-inch margins. All section content and the original screenshot are preserved.
 
 ## Proposal files
 
@@ -95,10 +98,10 @@ The original `CSE598-capstone-proposal-template.docx` is preserved and used as t
 Word export's reference template. Exports are `proposal/capstone_proposal.docx`
 and `proposal/capstone_proposal.pdf`.
 
-Use the verified two-page PDF for submission when PDF is accepted. The Word
-export contains all required sections and the embedded screenshot, but its
-pagination in Microsoft Word could not be checked because Word's Apple Events
-interface timed out. The original instructor document is unchanged.
+Both exports contain all required sections and the embedded screenshot and are
+verified at two pages. Submit the PDF or Word version accepted by Canvas. The
+original instructor document is unchanged; only the exported Word copy receives
+compact paragraph spacing and page margins for the assignment's length limit.
 
 To rebuild exports, run `./scripts/build_proposal.sh` with Pandoc and XeLaTeX
 installed. These are document-authoring tools, not baseline runtime dependencies.

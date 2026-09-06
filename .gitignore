@@ -8,6 +8,7 @@ __pycache__/
 *.vvp
 *.vcd
 *.tmp
+~$*.docx
 .DS_Store
 .build/
 # Local task brief; the runnable project and instructor template are published.
