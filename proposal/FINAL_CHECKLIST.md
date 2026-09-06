@@ -4,16 +4,14 @@ Deadline: **September 6, 2026, 11:59 PM Phoenix Time (UTC−07:00)**
 
 Repository: https://github.com/ytliu74/rtlrepair-agent
 
-**Status: submission-ready. Canvas upload remains the student's final action.**
-Two real one-shot runs with `gpt-5.6-sol` each passed 853 checks. The second used
-a fresh unauthenticated public clone and the README setup. A genuine Terminal
-screenshot shows the command, model, generation, compilation, simulation, and
-`TEST_PASS`. No iterative repair is claimed.
+**Current revision:** GPT-4.1 counter + FIFO, one call per design, no repair.
+Both first live runs passed. Public-clone reproduction and final document checks
+are being refreshed for this expanded baseline.
 
 ## Submission checklist
 
-- [x] Proposal completed using instructor template's structure and Word reference styles
-- [x] Proposal is approximately 1–2 pages (PDF and Microsoft Word: 2 pages each)
+- [ ] Proposal completed using instructor template's structure and Word reference styles
+- [ ] Proposal is approximately 1–2 pages (recheck updated PDF and Word)
 - [x] Public repository URL inserted
 - [x] Repository accessible to everyone
 - [x] README.md complete
@@ -23,85 +21,76 @@ screenshot shows the command, model, generation, compilation, simulation, and
 - [x] Exact run command documented
 - [x] Input location documented
 - [x] Output location documented
-- [x] Concrete test case included
-- [x] Baseline actually executed through a real LLM call
+- [x] Concrete test cases included: counter and FIFO
+- [x] Baseline actually executed through real LLM calls
 - [x] Generated RTL saved
 - [x] Actual successful baseline output saved
 - [x] Successful screenshot captured
-- [x] Screenshot clearly shows execution and output
-- [x] No API keys committed (actual-key/pattern scan passed; `.env` excluded)
-- [x] Final repository changes pushed
+- [x] Screenshot clearly shows FIFO command, model, execution, and both outcomes
+- [ ] No API keys committed (repeat scan for new artifacts)
+- [ ] Final repository changes pushed
 - [x] Repository link tested
 - [ ] Canvas submission completed before 11:59 PM Phoenix Time
 
 ## Manual action remaining: Canvas submission
 
-Upload `proposal/capstone_proposal.pdf` (or the Word version if required by Canvas)
-and `artifacts/baseline_screenshot.png`. Include the public repository URL above.
-Confirm that Canvas shows the intended files and a submission timestamp before
-the deadline. The screenshot is also embedded in the proposal; the separate PNG
-provides the full-resolution original. Canvas submission has not been performed.
+After final checks, upload `proposal/capstone_proposal.pdf` (or Word if Canvas
+requires it) and `artifacts/baseline_screenshot.png`, with the public repository
+link. Confirm the files and submission timestamp before the deadline.
+The screenshot is also embedded in both proposal exports.
+Canvas submission has not been performed.
 
-## Actual live evidence
+## Actual GPT-4.1 evidence
 
-Both runs used OpenAI's `https://api.openai.com/v1` endpoint with requested and
-returned model ID `gpt-5.6-sol`, one call per run, no retries or repair, and a
-4,096-completion-token limit. Each reported 242 prompt tokens plus 80 completion
-tokens. The model received no testbench source.
+Model requested and returned: `gpt-4.1-2025-04-14`; API root:
+`https://api.openai.com/v1`. Sampling uses provider defaults, with a
+4,096-completion-token limit, one request per task, and no retries or repair.
+Neither testbench nor reference fixture is included in generation.
 
-| Run | Start (UTC, September 6) | Generation | Compile | Simulation | Result |
-| --- | --- | --- | --- | --- | --- |
-| Primary | 21:58:25 | 2.644741 s | 0.057887 s | 0.013298 s | TEST_PASS, 853 checks |
-| Fresh public clone | 22:00:54 | 1.941901 s | 0.037862 s | 0.013409 s | TEST_PASS, 853 checks |
+| Task | First run start (UTC, September 6) | Generation | Functional verification | Tokens |
+| --- | --- | --- | --- | --- |
+| Counter | 22:37:29 | 1.984719 s | TEST_PASS; 853 checks | 329 |
+| FIFO | 22:37:32 | 3.477588 s | TEST_PASS; 744 cycles / 2,233 checks | 1,099 |
 
-Primary files: `generated/counter.sv`, `results/baseline_results.json`, and
-`artifacts/baseline_output.txt`. Reproduction files:
-`generated/counter_reproduction.sv`, `results/reproduction_results.json`, and
-`artifacts/reproduction_output.txt`. Reproduction JSON preserves the paths from
-the original clone; the archived RTL's SHA-256 matches its recorded hash.
+Both compiler and simulator exit codes were zero for both tasks.
+The FIFO compile warning about ignored `unique/unique0` qualities is preserved,
+not suppressed. Generated code was not manually corrected.
 
-`artifacts/baseline_screenshot.png` is an actual macOS capture of the Terminal
-window in which the second run executed. The window was resized to show both
-the command and the result; no terminal image was generated from text.
+Primary files: `generated/counter.sv`, `generated/fifo.sv`,
+`results/baseline_results.json`, `results/fifo_results.json`,
+`artifacts/baseline_output.txt`, `artifacts/fifo_output.txt`, and
+`artifacts/suite_output.txt`.
 
-## Validation evidence
+`artifacts/baseline_screenshot.png` is a real macOS capture of the Terminal
+window where `./scripts/run_examples.sh` executed. Its visible portion includes
+the FIFO subcommand, full FIFO result, and counter/FIFO summary.
+No terminal screenshot was generated from text.
 
-- Python 3.13.1 and Icarus Verilog 12.0.
-- `python -m unittest discover -s tests -v`: 17 tests passed, including seven
-  counter mutation cases, real compilation failure, real simulation timeout,
-  and CLI execution using a clearly marked mocked completion with real EDA tools.
-- `python -m scripts.run_fixture`: PASS, 853 comparisons; separate hand-written
-  fixture evidence in `results/fixture_results.json` and `artifacts/fixture_output.txt`.
-- `./scripts/check_environment.sh`: all checks passed after local API setup.
-- `./scripts/run_baseline.sh`: live generation, compilation, simulation, and
-  functional verification all passed, twice. Generated modules and raw logs saved.
-- Fresh public clone of commit `8603331e3f00befdbee9dc1fed60b843b1167e60`:
-  virtual environment created, `pip install -r requirements.txt` succeeded,
-  local `.env` configured, environment checks passed, and live baseline passed.
-- Unauthenticated GitHub page, raw README, and public HTTPS clone succeeded.
-- Final staged credential scan covered 35 files and decompressed Word contents;
-  no key or credential pattern was found. The temporary reproduction credential
-  copy was removed; the original project `.env` remains local and untracked.
-- Both live results' specification, testbench, and generated-RTL SHA-256 hashes
-  match their saved source files. The unchanged baseline code passed 17 tests.
-- `./scripts/build_proposal.sh` exported Word/PDF; `pdfinfo` confirms 2 PDF pages.
-  Both PDF pages were visually checked for complete text and the genuine screenshot.
-- Microsoft Word's `compute statistics ... statistic pages` confirms 2 pages
-  after applying the export script's 11-point body, 12-point headings, and
-  0.8-inch margins. All section content and the original screenshot are preserved.
+Earlier GPT-5.6 Sol counter results, logs, generated modules, and screenshot are
+preserved under each output directory's `archive/gpt-5.6-sol/` subdirectory.
+Those are historical results and are not evidence for the current model.
 
-## Proposal files
+## Verification
 
-`proposal/capstone_proposal.md` contains the instructor's Basic Information and
-seven required sections, with actual observed model/results and the screenshot.
-The original `CSE598-capstone-proposal-template.docx` is preserved and used as the
-Word export's reference template. Exports are `proposal/capstone_proposal.docx`
-and `proposal/capstone_proposal.pdf`.
+- Python 3.13.1; Icarus Verilog 12.0.
+- All 20 tests pass, including seven faulty counters and ten faulty FIFOs
+  rejected by the real simulators. Tests also cover parser failures, timeouts,
+  secret-safe API errors, and a clearly mocked CLI run.
+- FIFO hand-written fixture passes 744 cycles and 2,233 state checks. Results/log:
+  `results/fifo_fixture_results.json`, `artifacts/fifo_fixture_output.txt`.
+- Counter fixture independently passes 853 checks.
+- The FIFO scoreboard uses a shift queue, independently of the DUT's ring-buffer
+  pointers. Coverage includes full/empty simultaneous requests, overflow,
+  underflow, data-out hold, reset priority, and pointer wrap.
+- `./scripts/check_environment.sh` passes with the configured GPT-4.1 snapshot.
+- `./scripts/run_examples.sh` passed in the actual Terminal.
+- Fresh public-clone reproduction for this revision remains to be recorded.
 
-Both exports contain all required sections and the embedded screenshot and are
-verified at two pages. Submit the PDF or Word version accepted by Canvas. The
-original instructor document is unchanged; only the exported Word copy receives
-compact paragraph spacing and page margins for the assignment's length limit.
+## Proposal exports
 
-To rebuild exports, run `./scripts/build_proposal.sh` with Pandoc and XeLaTeX
-installed. These are document-authoring tools, not baseline runtime dependencies.
+Source: `proposal/capstone_proposal.md`. It retains Basic Information and all
+seven instructor sections, with actual counter/FIFO results and the screenshot.
+The original instructor `.docx` remains unchanged and supplies Word reference
+styles. Run `./scripts/build_proposal.sh` with Pandoc and XeLaTeX to export PDF
+and Word; the Word formatting script applies compact spacing and 0.8-inch
+margins. Document tools are not required to execute the baseline.

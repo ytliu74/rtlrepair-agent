@@ -1,0 +1,57 @@
+{
+  "test_name": "fifo",
+  "mode": "one-shot",
+  "started_at_utc": "2026-09-06T22:37:32.101733+00:00",
+  "model": "gpt-4.1-2025-04-14",
+  "generation_success": true,
+  "generation_latency_seconds": 3.477588,
+  "generated_rtl_path": "generated/fifo.sv",
+  "spec_path": "examples/fifo/spec.txt",
+  "testbench_path": "examples/fifo/tb.sv",
+  "python_version": "3.13.1",
+  "error": null,
+  "compile_success": true,
+  "simulation_success": true,
+  "functional_pass": true,
+  "compile_latency_seconds": 0.029681,
+  "simulation_latency_seconds": 0.019164,
+  "compiler_stdout": "",
+  "compiler_stderr": "/Users/henry/repos/CSE598-proposal-RTL/generated/fifo.sv:51: vvp.tgt sorry: Case unique/unique0 qualities are ignored.\n",
+  "simulation_stdout": "Cycles: 744; checks: 2233\nCoverage: full_both=4 empty_both=5 both=129 overflow=1 underflow=25 resets=8\nTEST_PASS\n/Users/henry/repos/CSE598-proposal-RTL/examples/fifo/tb.sv:116: $finish called at 7446000 (1ps)\n",
+  "simulation_stderr": "",
+  "compile_returncode": 0,
+  "simulation_returncode": 0,
+  "compile_timed_out": false,
+  "simulation_timed_out": false,
+  "spec_sha256": "628bc44a61b6505b83c3661bccbc83bcacb6cf5237a7e18a82225fd3baad0e81",
+  "testbench_sha256": "c9e8ee8744674c2a09ed86e5c78d6502218411c137a353193fad975ace1f2979",
+  "response_model": "gpt-4.1-2025-04-14",
+  "usage": {
+    "prompt_tokens": 530,
+    "completion_tokens": 569,
+    "total_tokens": 1099,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    }
+  },
+  "finish_reason": "stop",
+  "generated_rtl_sha256": "1efb9ba8577e802ab44010b152fe7d3a9ebf1d1bb70e1a6e9dd5839fc356e271",
+  "prompt": [
+    {
+      "role": "system",
+      "content": "Act as an RTL designer. Generate synthesizable SystemVerilog from the\nspecification. Follow the interface exactly; preserve module and port names.\nReturn the complete module and only SystemVerilog, with no explanation and no\nMarkdown code fences. Do not include testbenches, simulation-only constructs,\nsystem tasks, file access, or additional modules."
+    },
+    {
+      "role": "user",
+      "content": "Design a synthesizable single-clock FIFO with exactly 16 entries of 8 bits.\nThe complete module must be named fifo, with exactly these ports:\n  input logic clk\n  input logic reset\n  input logic wr_en\n  input logic rd_en\n  input logic [7:0] data_in\n  output logic [7:0] data_out\n  output logic [4:0] count\n  output logic full\n  output logic empty\n\nAll state changes occur only on rising edges of clk. Reset is active high,\nsynchronous, and takes priority over both requests. Reset clears the FIFO,\nsets count and data_out to zero, and resets queue ordering. Internal memory\ndoes not need to be cleared. No initialization before reset is required.\n\ncount is the number of occupied entries, from 0 through 16 inclusive.\nfull is high exactly when count is 16; empty is high exactly when count is 0.\nBoth flags reflect current occupancy, including after each rising edge.\n\nDecide which requests are accepted using occupancy immediately BEFORE the edge:\n- A read is accepted when rd_en is high and the FIFO is not empty.\n- A write is accepted when wr_en is high and either the FIFO is not full or a\n  read is accepted at that same edge. Thus full plus simultaneous read/write\n  accepts both operations, retaining occupancy 16.\n- At empty plus simultaneous read/write, accept only the write, leaving count 1.\n  There is no fall-through or bypass read of the newly supplied data.\n- Ignore a read when empty, and ignore a write when full without an accepted read.\n\nAn accepted read removes the oldest queued byte and registers that byte on\ndata_out. An accepted write appends data_in to the queue. When both are accepted,\nreturn the OLD oldest byte and append the NEW byte while keeping count unchanged.\nOtherwise count increases by one for write-only or decreases by one for read-only.\ndata_out holds its previous value whenever no read is accepted, even if empty.\nSupport indefinite FIFO ordering across internal pointer wrap-around.\nChanging reset or other inputs between rising edges must not change stored state\nor data_out. Provide only the complete fifo module, no testbench.\n"
+    }
+  ],
+  "completed_at_utc": "2026-09-06T22:37:35.631981+00:00"
+}

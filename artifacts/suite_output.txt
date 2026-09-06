@@ -1,0 +1,45 @@
+$ ./scripts/run_examples.sh
+$ ./scripts/run_baseline.sh counter
+[PASS] Python 3.13.1 (requires 3.10+)
+[PASS] iverilog found
+[PASS] vvp found
+[PASS] Python dependencies: standard library only
+[PASS] OPENAI_API_KEY configured
+[PASS] OPENAI_MODEL configured
+[PASS] API URL configuration
+Model: gpt-4.1-2025-04-14
+Generating RTL (one LLM call; testbench withheld)...
+Generation: PASS -> generated/counter.sv
+Compilation: PASS
+Simulation: PASS
+--- simulation_stdout ---
+Checks: 853
+TEST_PASS
+/Users/henry/repos/CSE598-proposal-RTL/examples/counter/tb.sv:60: $finish called at 2846000 (1ps)
+Functional verification: TEST_PASS
+Results: results/baseline_results.json
+$ ./scripts/run_baseline.sh fifo
+[PASS] Python 3.13.1 (requires 3.10+)
+[PASS] iverilog found
+[PASS] vvp found
+[PASS] Python dependencies: standard library only
+[PASS] OPENAI_API_KEY configured
+[PASS] OPENAI_MODEL configured
+[PASS] API URL configuration
+Model: gpt-4.1-2025-04-14
+Generating RTL (one LLM call; testbench withheld)...
+Generation: PASS -> generated/fifo.sv
+Compilation: PASS
+Simulation: PASS
+--- compiler_stderr ---
+/Users/henry/repos/CSE598-proposal-RTL/generated/fifo.sv:51: vvp.tgt sorry: Case unique/unique0 qualities are ignored.
+--- simulation_stdout ---
+Cycles: 744; checks: 2233
+Coverage: full_both=4 empty_both=5 both=129 overflow=1 underflow=25 resets=8
+TEST_PASS
+/Users/henry/repos/CSE598-proposal-RTL/examples/fifo/tb.sv:116: $finish called at 7446000 (1ps)
+Functional verification: TEST_PASS
+Results: results/fifo_results.json
+=== One-shot suite (one API call per design) ===
+Counter: PASS
+FIFO: PASS

@@ -1,4 +1,4 @@
-$ ./scripts/run_baseline.sh counter
+$ ./scripts/run_baseline.sh
 [PASS] Python 3.13.1 (requires 3.10+)
 [PASS] iverilog found
 [PASS] vvp found
@@ -6,7 +6,7 @@ $ ./scripts/run_baseline.sh counter
 [PASS] OPENAI_API_KEY configured
 [PASS] OPENAI_MODEL configured
 [PASS] API URL configuration
-Model: gpt-4.1-2025-04-14
+Model: gpt-5.6-sol
 Generating RTL (one LLM call; testbench withheld)...
 Generation: PASS -> generated/counter.sv
 Compilation: PASS
@@ -14,6 +14,6 @@ Simulation: PASS
 --- simulation_stdout ---
 Checks: 853
 TEST_PASS
-/Users/henry/repos/CSE598-proposal-RTL/examples/counter/tb.sv:60: $finish called at 2846000 (1ps)
+/private/tmp/rtlrepair-live.QHp5zm/rtlrepair-agent/examples/counter/tb.sv:60: $finish called at 2846000 (1ps)
 Functional verification: TEST_PASS
 Results: results/baseline_results.json

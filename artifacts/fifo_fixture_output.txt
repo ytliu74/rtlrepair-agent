@@ -1,0 +1,8 @@
+Offline fixture only: fifo, hand-written RTL, no LLM call.
+Compilation: PASS
+Simulation: PASS
+Cycles: 744; checks: 2233
+Coverage: full_both=4 empty_both=5 both=129 overflow=1 underflow=25 resets=8
+TEST_PASS
+/Users/henry/repos/CSE598-proposal-RTL/examples/fifo/tb.sv:116: $finish called at 7446000 (1ps)
+Functional verification: TEST_PASS

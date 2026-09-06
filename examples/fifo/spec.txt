@@ -1,0 +1,38 @@
+Design a synthesizable single-clock FIFO with exactly 16 entries of 8 bits.
+The complete module must be named fifo, with exactly these ports:
+  input logic clk
+  input logic reset
+  input logic wr_en
+  input logic rd_en
+  input logic [7:0] data_in
+  output logic [7:0] data_out
+  output logic [4:0] count
+  output logic full
+  output logic empty
+
+All state changes occur only on rising edges of clk. Reset is active high,
+synchronous, and takes priority over both requests. Reset clears the FIFO,
+sets count and data_out to zero, and resets queue ordering. Internal memory
+does not need to be cleared. No initialization before reset is required.
+
+count is the number of occupied entries, from 0 through 16 inclusive.
+full is high exactly when count is 16; empty is high exactly when count is 0.
+Both flags reflect current occupancy, including after each rising edge.
+
+Decide which requests are accepted using occupancy immediately BEFORE the edge:
+- A read is accepted when rd_en is high and the FIFO is not empty.
+- A write is accepted when wr_en is high and either the FIFO is not full or a
+  read is accepted at that same edge. Thus full plus simultaneous read/write
+  accepts both operations, retaining occupancy 16.
+- At empty plus simultaneous read/write, accept only the write, leaving count 1.
+  There is no fall-through or bypass read of the newly supplied data.
+- Ignore a read when empty, and ignore a write when full without an accepted read.
+
+An accepted read removes the oldest queued byte and registers that byte on
+data_out. An accepted write appends data_in to the queue. When both are accepted,
+return the OLD oldest byte and append the NEW byte while keeping count unchanged.
+Otherwise count increases by one for write-only or decreases by one for read-only.
+data_out holds its previous value whenever no read is accepted, even if empty.
+Support indefinite FIFO ordering across internal pointer wrap-around.
+Changing reset or other inputs between rising edges must not change stored state
+or data_out. Provide only the complete fifo module, no testbench.

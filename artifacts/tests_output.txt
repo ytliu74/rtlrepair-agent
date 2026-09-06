@@ -15,8 +15,11 @@ test_good_fixture (test_baseline.SimulatorTests.test_good_fixture) ... ok
 test_pass_with_nonzero_exit_fails (test_baseline.SimulatorTests.test_pass_with_nonzero_exit_fails) ... ok
 test_timeout (test_baseline.SimulatorTests.test_timeout) ... ok
 test_zero_exit_without_pass_fails (test_baseline.SimulatorTests.test_zero_exit_without_pass_fails) ... ok
+test_faulty_fifos_are_rejected (test_fifo.FIFOTests.test_faulty_fifos_are_rejected) ... ok
+test_fixture (test_fifo.FIFOTests.test_fixture) ... ok
+test_testbench_withheld (test_fifo.FIFOTests.test_testbench_withheld) ... ok
 
 ----------------------------------------------------------------------
-Ran 17 tests in 0.831s
+Ran 20 tests in 1.112s
 
 OK

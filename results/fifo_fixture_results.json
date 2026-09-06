@@ -1,0 +1,18 @@
+{
+  "mode": "hand-written-fixture",
+  "model": null,
+  "rtl_path": "tests/fixtures/fifo_good.sv",
+  "compile_success": true,
+  "simulation_success": true,
+  "functional_pass": true,
+  "compile_latency_seconds": 0.035007,
+  "simulation_latency_seconds": 0.018688,
+  "compiler_stdout": "",
+  "compiler_stderr": "",
+  "simulation_stdout": "Cycles: 744; checks: 2233\nCoverage: full_both=4 empty_both=5 both=129 overflow=1 underflow=25 resets=8\nTEST_PASS\n/Users/henry/repos/CSE598-proposal-RTL/examples/fifo/tb.sv:116: $finish called at 7446000 (1ps)\n",
+  "simulation_stderr": "",
+  "compile_returncode": 0,
+  "simulation_returncode": 0,
+  "compile_timed_out": false,
+  "simulation_timed_out": false
+}
